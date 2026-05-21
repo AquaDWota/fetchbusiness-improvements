@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-fetch-purple: #7c3aed;
+  --color-fetch-purple-light: #ede9fe;
+  --color-fetch-purple-dark: #5b50e6;
+  --color-fetch-navy: #1a1a3d;
+  --color-fetch-bg: #f9fafb;
+  --color-fetch-sidebar: #f3f4f6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
