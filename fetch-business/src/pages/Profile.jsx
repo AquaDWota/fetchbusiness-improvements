@@ -1,4 +1,5 @@
-import { Info, FileText, Bot, Pencil, ChevronDown } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Info, FileText, Bot, Pencil, ChevronDown, ShieldCheck } from 'lucide-react'
 import WorkbenchHeader from '../components/WorkbenchHeader'
 
 export default function Profile() {
@@ -126,6 +127,20 @@ export default function Profile() {
             className="w-full resize-y rounded-lg border border-gray-200 px-4 py-3 text-sm leading-relaxed text-gray-700 focus:border-fetch-purple focus:outline-none focus:ring-2 focus:ring-fetch-purple/20"
           />
         </div>
+
+        <Link
+          to="/workbench/trust"
+          className="mt-6 flex items-center gap-4 rounded-2xl border border-fetch-purple/20 bg-fetch-purple-light/40 p-6 transition-colors hover:bg-fetch-purple-light/60"
+        >
+          <ShieldCheck className="h-8 w-8 text-fetch-purple" />
+          <div>
+            <p className="font-semibold text-gray-900">Trust & Governance settings</p>
+            <p className="mt-1 text-sm text-gray-600">
+              Fiduciary mode, behavioral version pinning, conflict disclosures, and intent
+              verification for this agent.
+            </p>
+          </div>
+        </Link>
       </div>
     </>
   )

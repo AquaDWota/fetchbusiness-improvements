@@ -1,4 +1,5 @@
-import { Search, RefreshCw } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Search, RefreshCw, Shield } from 'lucide-react'
 import WorkbenchHeader from '../components/WorkbenchHeader'
 
 const statusFilters = [
@@ -26,6 +27,25 @@ export default function Orders() {
         }
       />
       <div className="flex-1 overflow-y-auto bg-fetch-bg p-8">
+        <div className="mb-6 flex flex-wrap items-center gap-4 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm">
+          <Shield className="h-4 w-4 text-fetch-purple" />
+          <span className="text-gray-600">
+            Purchases follow{' '}
+            <Link to="/workbench/trust" className="font-medium text-fetch-purple hover:underline">
+              graduated financial authority
+            </Link>
+            . All commits are logged in{' '}
+            <Link
+              to="/workbench/trust"
+              state={{ tab: 'audit' }}
+              className="font-medium text-fetch-purple hover:underline"
+            >
+              verifiable audit trails
+            </Link>
+            .
+          </span>
+        </div>
+
         <div className="mb-6 flex flex-wrap items-center gap-3">
           {statusFilters.map(({ label, active, style }) => (
             <button

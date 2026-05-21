@@ -10,6 +10,7 @@ import Workflows from './pages/Workflows'
 import AgentMessages from './pages/AgentMessages'
 import Orders from './pages/Orders'
 import Integrations from './pages/Integrations'
+import TrustGovernance from './pages/TrustGovernance'
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/workbench/workflows" element={<Workflows />} />
           <Route path="/workbench/chats" element={<AgentMessages />} />
           <Route path="/workbench/orders" element={<Orders />} />
+          <Route path="/workbench/trust" element={<TrustGovernance />} />
           <Route path="/workbench/integrations" element={<Integrations />} />
         </Route>
         <Route element={<ClaimLayout />}>

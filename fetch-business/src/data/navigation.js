@@ -8,6 +8,7 @@ import {
   MessagesSquare,
   ShoppingBag,
   Plug,
+  ShieldCheck,
   Settings,
   LogOut,
 } from 'lucide-react'
@@ -21,6 +22,7 @@ export const navItems = [
   { label: 'Workflows & Tasks', path: '/workbench/workflows', icon: ListChecks },
   { label: 'Agent Messages', path: '/workbench/chats', icon: MessagesSquare },
   { label: 'Orders', path: '/workbench/orders', icon: ShoppingBag },
+  { label: 'Trust & Governance', path: '/workbench/trust', icon: ShieldCheck },
   { label: 'Integrations', path: '/workbench/integrations', icon: Plug },
 ]
 

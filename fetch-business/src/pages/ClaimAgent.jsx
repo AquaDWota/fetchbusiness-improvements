@@ -1,4 +1,5 @@
-import { Search, Clock, CheckCircle2, LayoutGrid } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Search, Clock, CheckCircle2, LayoutGrid, ShieldAlert } from 'lucide-react'
 import { claimAgents } from '../data/navigation'
 
 function AgentStatus({ status }) {
@@ -37,6 +38,17 @@ export default function ClaimAgent() {
       <p className="mt-2 text-center text-sm text-gray-500">
         Agents associated with fetch.ai
       </p>
+
+      <div className="mx-auto mt-6 flex max-w-lg items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+        <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0" />
+        <p>
+          Directory listings are verified, not just passive.{' '}
+          <Link to="/workbench/trust" className="font-medium underline">
+            Adversarial agent detection
+          </Link>{' '}
+          monitors behavioral anomalies before claims complete.
+        </p>
+      </div>
 
       <div className="mt-8 flex items-center justify-center gap-3">
         <span className="text-sm text-gray-600">Can&apos;t find your agent?</span>

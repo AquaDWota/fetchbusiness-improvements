@@ -1,10 +1,27 @@
 import { Link } from 'react-router-dom'
-import { Search, Plus, Bot } from 'lucide-react'
+import { Search, Plus, Bot, ShieldCheck, ArrowRight } from 'lucide-react'
 import { agents } from '../data/navigation'
 
 export default function Home() {
   return (
     <div className="flex-1 overflow-y-auto p-8">
+      <Link
+        to="/workbench/trust"
+        className="mb-8 flex items-center justify-between gap-4 rounded-2xl border border-fetch-purple/20 bg-fetch-purple-light/50 px-6 py-4 transition-colors hover:bg-fetch-purple-light"
+      >
+        <div className="flex items-center gap-3">
+          <ShieldCheck className="h-6 w-6 text-fetch-purple" />
+          <div>
+            <p className="font-semibold text-gray-900">Trust & Governance</p>
+            <p className="text-sm text-gray-600">
+              Configure fiduciary standards, financial tiers, audit trails, and 7 more trust
+              frontiers
+            </p>
+          </div>
+        </div>
+        <ArrowRight className="h-5 w-5 shrink-0 text-fetch-purple" />
+      </Link>
+
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900">My Agents</h1>
         <p className="mt-1 text-sm text-gray-500">

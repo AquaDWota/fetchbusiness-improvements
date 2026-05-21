@@ -1,6 +1,8 @@
-import { Lock } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Lock, Globe } from 'lucide-react'
 import WorkbenchHeader from '../components/WorkbenchHeader'
 import { integrationApps } from '../data/navigation'
+import { interoperabilityProtocols } from '../data/governance'
 
 function AppLogo({ name }) {
   const colors = {
@@ -80,6 +82,48 @@ export default function Integrations() {
           <p className="mt-4 text-xs text-gray-500">
             Toggle an app to connect your account, or use Manage to configure settings.
           </p>
+        </section>
+
+        <section className="mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">Protocol bridges</h2>
+              <p className="mt-1 text-sm text-gray-500">
+                Interoperability beyond the Fetch ecosystem — MCP, A2A, and open standards.
+              </p>
+            </div>
+            <Link
+              to="/workbench/trust"
+              className="text-sm font-medium text-fetch-purple hover:underline"
+            >
+              Manage in Trust & Governance
+            </Link>
+          </div>
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {interoperabilityProtocols.map((protocol) => (
+              <div
+                key={protocol.id}
+                className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm"
+              >
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-2">
+                    <Globe className="h-4 w-4 text-fetch-purple" />
+                    <h3 className="font-semibold text-gray-900">{protocol.name}</h3>
+                  </div>
+                  <span
+                    className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+                      protocol.status === 'connected'
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-gray-100 text-gray-600'
+                    }`}
+                  >
+                    {protocol.status}
+                  </span>
+                </div>
+                <p className="mt-2 text-sm text-gray-500">{protocol.description}</p>
+              </div>
+            ))}
+          </div>
         </section>
 
         <section>
