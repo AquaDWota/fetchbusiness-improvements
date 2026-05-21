@@ -8,7 +8,6 @@ import {
   MessagesSquare,
   ShoppingBag,
   Plug,
-  ShieldCheck,
   Settings,
   LogOut,
 } from 'lucide-react'
@@ -22,7 +21,6 @@ export const navItems = [
   { label: 'Workflows & Tasks', path: '/workbench/workflows', icon: ListChecks },
   { label: 'Agent Messages', path: '/workbench/chats', icon: MessagesSquare },
   { label: 'Orders', path: '/workbench/orders', icon: ShoppingBag },
-  { label: 'Trust & Governance', path: '/workbench/trust', icon: ShieldCheck },
   { label: 'Integrations', path: '/workbench/integrations', icon: Plug },
 ]
 
@@ -65,9 +63,4 @@ export const businessInfoTabs = [
   'Fact Check',
 ]
 
-export const integrationApps = [
-  { name: 'Stripe', category: 'Payments', locked: true },
-  { name: 'Square', category: 'Orders', locked: true },
-  { name: 'Shopify', category: 'E-commerce', locked: true },
-  { name: 'Google Calendar', category: 'Google Calendar', locked: false, enabled: true },
-]
+export { allIntegrationApps as integrationApps } from './integrations'

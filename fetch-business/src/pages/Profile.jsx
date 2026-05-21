@@ -1,8 +1,32 @@
-import { Link } from 'react-router-dom'
-import { Info, FileText, Bot, Pencil, ChevronDown, ShieldCheck } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Info, FileText, Bot, Pencil, ChevronDown, Save } from 'lucide-react'
 import WorkbenchHeader from '../components/WorkbenchHeader'
+import { useApp } from '../context/AppContext'
 
 export default function Profile() {
+  const { state, dispatch, activeProfile, activeAgent, addToast } = useApp()
+  const [form, setForm] = useState(activeProfile)
+
+  useEffect(() => {
+    setForm(activeProfile)
+  }, [state.activeAgentId, activeProfile])
+
+  const update = (field, value) => setForm((f) => ({ ...f, [field]: value }))
+
+  const save = () => {
+    dispatch({
+      type: 'UPDATE_PROFILE',
+      payload: { agentId: state.activeAgentId, data: form },
+    })
+    addToast('Profile saved successfully')
+  }
+
+  const copyShareLink = async () => {
+    const url = `${window.location.origin}/agent/${form.handle}`
+    await navigator.clipboard.writeText(url)
+    addToast('Agent share link copied to clipboard', 'info')
+  }
+
   return (
     <>
       <WorkbenchHeader
@@ -11,12 +35,14 @@ export default function Profile() {
           <>
             <button
               type="button"
+              onClick={() => addToast('Duplicate agent coming soon', 'info')}
               className="rounded-lg bg-fetch-purple-dark px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
             >
               + New
             </button>
             <button
               type="button"
+              onClick={copyShareLink}
               className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50"
             >
               Share
@@ -25,11 +51,21 @@ export default function Profile() {
         }
       />
       <div className="flex-1 overflow-y-auto bg-fetch-bg p-8">
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900">Profile</h2>
-          <p className="mt-1 text-sm text-gray-500">
-            Update your agent&apos;s profile information.
-          </p>
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">Profile</h2>
+            <p className="mt-1 text-sm text-gray-500">
+              Update {activeAgent?.name}&apos;s profile information.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={save}
+            className="flex items-center gap-2 rounded-lg bg-fetch-purple px-4 py-2 text-sm font-medium text-white hover:bg-violet-700"
+          >
+            <Save className="h-4 w-4" />
+            Save changes
+          </button>
         </div>
 
         <div className="mb-6 rounded-2xl border border-gray-100 bg-white p-8 shadow-sm">
@@ -45,6 +81,7 @@ export default function Profile() {
               </div>
               <button
                 type="button"
+                onClick={() => addToast('Avatar upload coming soon', 'info')}
                 className="absolute bottom-0 right-0 flex h-8 w-8 items-center justify-center rounded-full bg-fetch-purple-dark text-white shadow-md"
               >
                 <Pencil className="h-3.5 w-3.5" />
@@ -54,12 +91,11 @@ export default function Profile() {
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-gray-700">
-                Agent Name
-              </label>
+              <label className="mb-1.5 block text-sm font-medium text-gray-700">Agent Name</label>
               <input
                 type="text"
-                defaultValue="Business AI"
+                value={form.name}
+                onChange={(e) => update('name', e.target.value)}
                 className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm focus:border-fetch-purple focus:outline-none focus:ring-2 focus:ring-fetch-purple/20"
               />
             </div>
@@ -68,8 +104,14 @@ export default function Profile() {
                 Identify Type of Agent
               </label>
               <div className="relative">
-                <select className="w-full appearance-none rounded-lg border border-gray-200 px-4 py-2.5 text-sm focus:border-fetch-purple focus:outline-none focus:ring-2 focus:ring-fetch-purple/20">
+                <select
+                  value={form.agentType}
+                  onChange={(e) => update('agentType', e.target.value)}
+                  className="w-full appearance-none rounded-lg border border-gray-200 px-4 py-2.5 text-sm focus:border-fetch-purple focus:outline-none focus:ring-2 focus:ring-fetch-purple/20"
+                >
                   <option>Business Owner</option>
+                  <option>Brand Representative</option>
+                  <option>Service Provider</option>
                 </select>
                 <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
               </div>
@@ -78,14 +120,13 @@ export default function Profile() {
               <label className="mb-1.5 block text-sm font-medium text-gray-700">
                 Agent Location
               </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search your Location..."
-                  className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm placeholder:text-gray-400 focus:border-fetch-purple focus:outline-none focus:ring-2 focus:ring-fetch-purple/20"
-                />
-                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-              </div>
+              <input
+                type="text"
+                value={form.location}
+                onChange={(e) => update('location', e.target.value)}
+                placeholder="Search your Location..."
+                className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm placeholder:text-gray-400 focus:border-fetch-purple focus:outline-none focus:ring-2 focus:ring-fetch-purple/20"
+              />
             </div>
             <div>
               <label className="mb-1.5 block text-sm font-medium text-gray-700">
@@ -93,6 +134,8 @@ export default function Profile() {
               </label>
               <input
                 type="url"
+                value={form.website}
+                onChange={(e) => update('website', e.target.value)}
                 placeholder="https://yourwebsite.com"
                 className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm placeholder:text-gray-400 focus:border-fetch-purple focus:outline-none focus:ring-2 focus:ring-fetch-purple/20"
               />
@@ -100,18 +143,15 @@ export default function Profile() {
           </div>
 
           <div className="mt-6">
-            <label className="mb-1.5 block text-sm font-medium text-gray-700">
-              Agent Handle
-            </label>
+            <label className="mb-1.5 block text-sm font-medium text-gray-700">Agent Handle</label>
             <input
               type="text"
-              defaultValue="business-ai-14fa58d2"
+              value={form.handle}
+              onChange={(e) => update('handle', e.target.value.toLowerCase().replace(/[^a-z0-9-_]/g, ''))}
               className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm focus:border-fetch-purple focus:outline-none focus:ring-2 focus:ring-fetch-purple/20"
             />
             <p className="mt-2 text-xs text-gray-500">
-              Optional: Custom handle for your agent (e.g. &apos;my-agent-handle&apos; for
-              @my-agent-handle.av). Must be lowercase letters, numbers, hyphens, or
-              underscores only.
+              Lowercase letters, numbers, hyphens, or underscores only.
             </p>
           </div>
         </div>
@@ -123,24 +163,12 @@ export default function Profile() {
           </div>
           <textarea
             rows={5}
-            defaultValue="I'm a marketing assistant that helps small businesses create engaging social media content, plan campaigns, and track performance. I can write posts, suggest hashtags, and provide analytics insights to grow your online presence."
+            value={form.description}
+            onChange={(e) => update('description', e.target.value)}
             className="w-full resize-y rounded-lg border border-gray-200 px-4 py-3 text-sm leading-relaxed text-gray-700 focus:border-fetch-purple focus:outline-none focus:ring-2 focus:ring-fetch-purple/20"
           />
         </div>
 
-        <Link
-          to="/workbench/trust"
-          className="mt-6 flex items-center gap-4 rounded-2xl border border-fetch-purple/20 bg-fetch-purple-light/40 p-6 transition-colors hover:bg-fetch-purple-light/60"
-        >
-          <ShieldCheck className="h-8 w-8 text-fetch-purple" />
-          <div>
-            <p className="font-semibold text-gray-900">Trust & Governance settings</p>
-            <p className="mt-1 text-sm text-gray-600">
-              Fiduciary mode, behavioral version pinning, conflict disclosures, and intent
-              verification for this agent.
-            </p>
-          </div>
-        </Link>
       </div>
     </>
   )

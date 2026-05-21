@@ -15,20 +15,25 @@ A rebuild of the [fetch business](https://business.fetch.ai) dashboard UI, based
 | `/workbench/chats` | Agent Messages |
 | `/workbench/orders` | Orders |
 | `/workbench/integrations` | Integrations |
-| `/workbench/trust` | Trust & Governance (10 improvement frontiers) |
+| `/workbench/integrations/:slug` | Integration detail (Gmail, HubSpot, Calendly) |
+| `/demo/asi1` | ASI:one consumer POC |
 
-### Trust & Governance frontiers
+## Functionality
 
-1. **Fiduciary standards** — brand vs user duty of care
-2. **Graduated financial authority** — purchase permission tiers
-3. **Verifiable audit trails** — signed A2A negotiation logs
-4. **Consent-aware data sharing** — retention and scope controls
-5. **Adversarial agent detection** — anomaly monitoring & quarantine
-6. **Conflict-of-interest disclosure** — affiliate/sponsorship metadata
-7. **Cross-agent arbitration** — neutral dispute resolution
-8. **Behavioral pinning** — versioned policy contracts
-9. **Intent verification** — signed goals across multi-hop calls
-10. **Interoperability** — MCP, A2A, and open protocol bridges
+All data persists in **localStorage** across page reloads.
+
+| Feature | What works |
+|---------|------------|
+| **Agents** | Create agents, search, switch active agent (header dropdown) |
+| **Profile** | Edit and save name, handle, description, location, website |
+| **Documents** | Upload files (simulated processing), delete, add plain text |
+| **Orders** | Create orders, filter by status, search |
+| **Claim** | Claim agents (progress → claimed), search brand agents |
+| **Workflows** | Create/run/delete workflows; schedule/delete tasks; credits tracking |
+| **Chats** | Start conversations, send messages (simulated agent replies) |
+| **Integrations** | Toggle apps on/off (persisted); deep-dive pages for finalized apps |
+| **Socials** | Generate platform-specific posts, copy to clipboard |
+| **ASI:one demo** | Consumer-side chat simulating discovery, A2A, and integration activity |
 
 ## Development
 
@@ -44,6 +49,22 @@ Open [http://localhost:5173](http://localhost:5173).
 ```bash
 npm run build
 npm run preview
+```
+
+## Reports
+
+| Report | File |
+|--------|------|
+| Gmail, HubSpot & Calendly (why include) | `docs/Gmail-HubSpot-Calendly-Integrations-Report.docx` |
+| Gmail / HubSpot / Calendly feasibility | `docs/Integrations-Feasibility-Report.md` · `docs/Integrations-Feasibility-Report.docx` |
+| Presentation (PowerPoint) | `docs/Fetch-Business-Integrations-Presentation.pptx` |
+
+Regenerate reports & deck:
+
+```bash
+npm run report:integrations
+npm run report:feasibility
+npm run presentation:pptx
 ```
 
 ## Stack

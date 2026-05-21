@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { AppProvider } from './context/AppContext'
+import ToastContainer from './components/Toast'
 import DashboardLayout from './components/DashboardLayout'
 import ClaimLayout from './components/ClaimLayout'
 import Home from './pages/Home'
@@ -10,12 +12,14 @@ import Workflows from './pages/Workflows'
 import AgentMessages from './pages/AgentMessages'
 import Orders from './pages/Orders'
 import Integrations from './pages/Integrations'
-import TrustGovernance from './pages/TrustGovernance'
+import IntegrationDetail from './pages/IntegrationDetail'
+import Asi1Demo from './pages/Asi1Demo'
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
+    <AppProvider>
+      <BrowserRouter>
+        <Routes>
         <Route element={<DashboardLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/workbench/profile" element={<Profile />} />
@@ -24,13 +28,16 @@ export default function App() {
           <Route path="/workbench/workflows" element={<Workflows />} />
           <Route path="/workbench/chats" element={<AgentMessages />} />
           <Route path="/workbench/orders" element={<Orders />} />
-          <Route path="/workbench/trust" element={<TrustGovernance />} />
           <Route path="/workbench/integrations" element={<Integrations />} />
+          <Route path="/workbench/integrations/:slug" element={<IntegrationDetail />} />
         </Route>
         <Route element={<ClaimLayout />}>
           <Route path="/claim" element={<ClaimAgent />} />
         </Route>
-      </Routes>
-    </BrowserRouter>
+        <Route path="/demo/asi1" element={<Asi1Demo />} />
+        </Routes>
+        <ToastContainer />
+      </BrowserRouter>
+    </AppProvider>
   )
 }
